@@ -16,7 +16,7 @@ function buildMetadata(userData) {
   function sum(obj) {
     return Object.keys(obj).reduce((sum,key)=>sum+parseFloat(obj[key]||0),0);
   }
-  
+ 
   console.log(`sum:${sum(result)}`);
   PANEL.append("h5").text(`${result[0].State_Name}`)
   PANEL.append("h6").text(`Cases:${result[93].Act_Total_Cases}`)
@@ -24,12 +24,12 @@ function buildMetadata(userData) {
   PANEL.append("h6").text(`Population: ${result[93].Population}`)
 
 
-  buildGauge(result[0].data.Act_Total_Deaths * 1000000 / data.Population );
+  //buildGauge(result[0].data.Act_Total_Deaths * 1000000 / data.Population );
 
 }
 
 function buildCharts(sample) {
-  
+ 
   // var dataUrl = `http://127.0.0.1:5000/api/v1.0/cases/${sample}`;
   var dataUrl = `/api/v1.0/cases/${sample}`;
   console.log(dataUrl)
@@ -45,7 +45,7 @@ function buildCharts(sample) {
     var cases  = data.map(info => info.Act_Total_Cases)
     console.log(deaths)
     console.log(deaths.length)
-    
+   
     // var otu_labels = resultArray.map(info => info.name);
     // var sample_values = resultArray.map(info => info.amount);
 
@@ -90,7 +90,7 @@ function buildCharts(sample) {
     // };
 
     // Plotly.newPlot("bar", barData, barLayout);
-    
+   
     buildMetadata(userInfo);
 
   });
@@ -112,7 +112,7 @@ function makeBubble(state){
 
     var deaths = data.map(info => info.Act_Total_Deaths);
     var deathspred = data.map(d=>d.Est_Total_Deaths);
-    
+   
     var cases  = data.map(info => info.Act_New_Cases);
     var casespred = data.map(d=>d.Est_New_Cases);
 
@@ -154,7 +154,7 @@ function makeBubble(state){
         //orientation: "h",
       }
     ];
-  
+ 
     var barLayout = {
       title: data[0].State_Name + ': Total Actual Deaths',
       margin: { t: 30, l: 150 }
@@ -162,11 +162,11 @@ function makeBubble(state){
 
     var barLayout2 = {
       title: data[0].State_Name + ': Total Predicted Deaths',
-      margin: { t: 30, l: 150 }, 
-      color:deaths, 
+      margin: { t: 30, l: 150 },
+      color:deaths,
       //yaxis: {range: [2,5]}
     };
-  
+ 
     Plotly.newPlot("alldeath", barData, barLayout);
     Plotly.newPlot("preddeath", barData2, barLayout2);
 
@@ -192,7 +192,7 @@ function makeBubble(state){
         //orientation: "h",
       }
     ];
-  
+ 
     var barLayout = {
       title: data[0].State_Name + ': Daily Actual Cases',
       margin: { t: 30, l: 150 }
@@ -200,10 +200,10 @@ function makeBubble(state){
 
     var barLayout2 = {
       title: data[0].State_Name + ': Daily Predicted Cases',
-      margin: { t: 30, l: 150 }, 
+      margin: { t: 30, l: 150 },
       color:deaths
     };
-  
+ 
     Plotly.newPlot("allcases", barData, barLayout);
     Plotly.newPlot("predcases", barData2, barLayout2);
 
@@ -229,7 +229,7 @@ function makeBubble(state){
         //orientation: "h",
       }
     ];
-  
+ 
     var barLayout = {
       title: data[0].State_Name + ': Daily Actual Deaths',
       margin: { t: 30, l: 150 }
@@ -237,10 +237,10 @@ function makeBubble(state){
 
     var barLayout2 = {
       title: data[0].State_Name + ': Daily Predicted Deaths',
-      margin: { t: 30, l: 150 }, 
+      margin: { t: 30, l: 150 },
       color:deaths
     };
-  
+ 
     Plotly.newPlot("dailydeaths", barData, barLayout);
     Plotly.newPlot("preddailydeaths", barData2, barLayout2);
 
@@ -248,18 +248,18 @@ function makeBubble(state){
 
     //MAP
     var mapdata = [{
-      type: "choroplethmapbox", 
-      name: "US states", 
-      geojson: "https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/us-states.json", 
+      type: "choroplethmapbox",
+      name: "US states",
+      geojson: "https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/us-states.json",
       locations: [ "AL", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY" ],
       ///NEEDS REAL DATA  
       z: [ 141, 55, 147, 32, 146, 151, 7, 146, 136, 145, 141, 49, 151, 38, 158, 164, 141, 146, 145, 142, 150, 155, 160, 156, 161, 147, 164, 150, 152, 155, 167, 145, 146, 151, 154, 161, 145, 155, 150, 151, 162, 172, 169, 170, 151, 152, 173, 160, 176 ],
      zmin: 25, zmax: 280,  colorscale:'Greys', opacity:.8,
      colorbar: {y: 0, yanchor: "bottom", title: {text: "Deaths", side: "left"}}}
-    
+   
       ];
      
-     var layout = {mapbox: {style: "light", center: {lon: lon[0], lat: lat[0]}, zoom: 4}, 
+     var layout = {mapbox: {style: "light", center: {lon: lon[0], lat: lat[0]}, zoom: 4},
      width: 600, height: 400, margin: {t: 0, b: 100}};
      
      var config = {mapboxAccessToken: "pk.eyJ1IjoiYW5ubWNuYW1hcmEiLCJhIjoiY2s5YTNiOXI0MDNvOTNlbDdwOXdtejRiYSJ9.W1SBSUR6jrI3YgWdhDV2sA"};
@@ -270,16 +270,20 @@ function makeBubble(state){
      var element = document.querySelector('#guage-chart')
      d3.select("#guage-chart").html("");
       /// NEED TO GET RANKING
-     needle = data.Act_Total_Deaths * 1000000 / data.Population;
+     
+     total_deaths = data.map( v => v.Act_New_Deaths ).reduce( (total_deaths, current) => total_deaths + current, 0 );
+     statePopulaton = data[0].Population
+     needle = parseInt(total_deaths * 100 * 100 / (statePopulaton * 0.1545), 10);
      midNo = needle.toString()
      // Properties of the gauge
      let gaugeOptions = {
       hasNeedle: true,
+      needle: needle,
       needleColor: 'gray',
       needleUpdateSpeed: 1000,
       arcColors: ['rgb(44, 151, 222)', 'lightgray'],
       arcDelimiters: [needle],
-      rangeLabel: ['0', '1542'],
+      rangeLabel: ['0', '100'],
       centralLabel: midNo,
     }
 
@@ -287,7 +291,7 @@ function makeBubble(state){
      // element, chartwidth )(height is always 0.5 * chartWidth), options, value
      // needle value is a number from 0 to 100.
      // NEEDS REAL DATA
-     GaugeChart.gaugeChart(element, 300, gaugeOptions).updateNeedle(needle);
+     GaugeChart.gaugeChart(element, 300, gaugeOptions);
 
     buildMetadata(data);
 
